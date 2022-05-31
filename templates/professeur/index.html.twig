@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ClasseController!{% endblock %}
+{% block title %}Hello ProfesseurController!{% endblock %}
 
 {% block body %}
 <style>
@@ -9,8 +9,8 @@
 </style>
 
 <button class="btn gap-2 m-2">
-  Total Classes
-  <div class="badge"> {{ classes.getTotalItemCount }}</div>
+  Total Professeurs
+  <div class="badge"> {{ professeurs.getTotalItemCount }}</div>
 </button>
 
 <div class="container overflow-x-auto">
@@ -18,18 +18,18 @@
     <!-- head -->
     <thead>
         <tr>
-            <th>Classe</th>
-            <th>Filiere</th>
-            <th>Niveau</th>
+            <th>Nom Complet</th>
+            <th>Grade</th>
+            <th>Details</th>
             <th class="text-center"></th>
         </tr>
     </thead>
     <tbody>
-        {% for classe in classes %}
+        {% for professeur in professeurs %}
             <tr>
-                <td scope="row">{{ classe.libelle}}</td>
-                <td>{{ classe.filiere}}</td>
-                <td>{{ classe.niveau}}</td>
+                <td scope="row">{{ professeur.nomComplet}}</td>
+                <td>{{ professeur.grade}}</td>
+                <td><button class="btn btn-sm btn-primary mr-4">Details</button></td>
                 <td>
                     <button class="btn btn-sm btn-warning mr-4">Modifier</button>
                     <button class="btn btn-sm btn-error ml-4">Supprimer</button>
@@ -40,6 +40,6 @@
   </table>
 </div>
 <div class="navigation">
-    {{ knp_pagination_render(classes) }}
+    {{ knp_pagination_render(professeurs) }}
 </div>
 {% endblock %}

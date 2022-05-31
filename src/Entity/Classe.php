@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClasseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClasseRepository::class)]
@@ -13,14 +15,26 @@ class Classe
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 25)]
+    #[ORM\Column(type: 'string', length: 25, nullable: false, unique:false)]
     private $libelle;
 
-    #[ORM\Column(type: 'string', length: 25)]
+    #[ORM\Column(type: 'string', length: 25, nullable: false, unique: false)]
     private $filiere;
 
-    #[ORM\Column(type: 'string', length: 25)]
+    #[ORM\Column(type: 'string', length: 25, nullable: false, unique: false)]
     private $niveau;
+
+    #[ORM\OneToMany(mappedBy: 'classe', targetEntity: Inscription::class)]
+    private $inscriptions;
+
+    #[ORM\ManyToMany(targetEntity: Professeur::class, mappedBy: 'classes')]
+    private $professeurs;
+
+    public function __construct()
+    {
+        $this->inscriptions = new ArrayCollection();
+        $this->professeurs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -62,4 +76,62 @@ class Classe
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Inscription>
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->setClasse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): self
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getClasse() === $this) {
+                $inscription->setClasse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Professeur>
+     */
+    public function getProfesseurs(): Collection
+    {
+        return $this->professeurs;
+    }
+
+    public function addProfesseur(Professeur $professeur): self
+    {
+        if (!$this->professeurs->contains($professeur)) {
+            $this->professeurs[] = $professeur;
+            $professeur->addClass($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfesseur(Professeur $professeur): self
+    {
+        if ($this->professeurs->removeElement($professeur)) {
+            $professeur->removeClass($this);
+        }
+
+        return $this;
+    }
+
 }
