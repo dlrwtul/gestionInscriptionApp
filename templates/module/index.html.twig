@@ -9,28 +9,41 @@
 </button>
 
 <div class="container overflow-x-auto">
-  <table class="table w-max border-b-2 border-gray-800">
+  <table class="table w-max ">
     <!-- head -->
     <thead>
         <tr>
+            <th></th>
             <th>Module</th>
+            <th></th>
             <th class="text-center"></th>
         </tr>
     </thead>
     <tbody>
+    {% set nbr = 0 %}
         {% for module in modules %}
+            {% set nbr = nbr + 1 %}
             <tr>
+                <td>{{ nbr}}</td>
                 <td scope="row">{{ module.libelle}}</td>
                 <td>
-                    <button class="btn btn-sm btn-warning mr-4">Modifier</button>
-                    <button class="btn btn-sm btn-error ml-4">Supprimer</button>
+                    <a href="{{ path('app_module_show',{'id': module.id,'module': module}) }}" class="btn btn-sm btn-details mr-4">Details</a>
+                </td>
+                <td>
+                    <a href="{{ path('app_module_edit',{'id': module.id,'module': module}) }}" class="btn btn-sm btn-warning mr-4">Modifier</a>
+                    <a href="{{ path('app_module_delete',{'id': module.id,'module': module}) }}" class="btn btn-sm btn-error ml-4">Supprimer</a>
                 </td>
             </tr>
         {% endfor %}
+            <tr>
+                <td></td>
+                <td>Nouveau</td>
+                <td colspan="2"><input type="text" name="libelle-module" value="" placeholder="Nom du module" class="input input-bordered w-full max-w-xs" /></td>
+            </tr>
     </tbody>
   </table>
 </div>
-<div class="navigation">
+<div class="navigation w-full flex flex-row  m-4">
     {{ knp_pagination_render(modules) }}
 </div>
 {% endblock %}

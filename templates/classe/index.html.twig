@@ -1,20 +1,27 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello ClasseController!{% endblock %}
+{% block title %}Classe{% endblock %}
 
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
+<div class="my-9">
+    <div class="badge badge-lg shadow-sm">Total {{ classes.getTotalItemCount }}</div>
 
-<button class="btn gap-2 m-2">
-  Total Classes
-  <div class="badge"> {{ classes.getTotalItemCount }}</div>
-</button>
-
-<div class="container overflow-x-auto">
-  <table class="table w-full border-b-2 border-gray-800">
+    <a href="{{ path('app_classe_new') }}" class="btn gap-2 m-2 absolute right-10 shadow-md">
+    Ajouter Classe
+    <div class="badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+        </svg>
+    </div>
+    </a>
+</div>
+{# <div class="classes-container">
+<div class="classes"> #}
+<div class="list-classe overflow-x-auto">
+  <table class="table w-full shadow-lg">
     <!-- head -->
     <thead>
         <tr>
@@ -31,15 +38,31 @@
                 <td>{{ classe.filiere}}</td>
                 <td>{{ classe.niveau}}</td>
                 <td>
-                    <button class="btn btn-sm btn-warning mr-4">Modifier</button>
-                    <button class="btn btn-sm btn-error ml-4">Supprimer</button>
+                    <a href="{{ path('app_classe_edit',{'id': classe.id,'classe': classe}) }}" class="btn btn-sm btn-warning mr-4">Modifier</a>
+                    <a href="{{ path('app_classe_delete',{'id': classe.id,'classe': classe}) }}" class="btn btn-sm btn-error ml-4 del-classe">Supprimer</a>
+
                 </td>
             </tr>
         {% endfor %}
     </tbody>
   </table>
 </div>
-<div class="navigation">
+{# <div class="add-classe">
+{% if form is defined %}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.libelle) }}
+        {{ form_row(form.filiere) }}
+        {{ form_row(form.niveau) }}
+        <button class="btn">{{ button_label|default('Sauvegarder') }}</button>
+    {{ form_end(form) }}
+{% endif %}
+</div>
+</div>
+</div> #}
+
+<div class="navigation  w-full flex justify-center m-4">
     {{ knp_pagination_render(classes) }}
 </div>
 {% endblock %}

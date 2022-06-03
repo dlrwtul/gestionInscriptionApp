@@ -1,0 +1,67 @@
+.add-classe form {
+    width: 40%;
+    background-color: #2a303c;
+    border-radius: 5px;
+    padding: 50px;
+}
+
+.add-classe {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-classe form input,.add-classe form select {
+    padding: 10px;
+    color: black;
+    border-radius: 5px;
+}
+
+.add-classe form label {
+    color: white;
+}
+
+/* .add-classe form {
+    width: 40%;
+    background-color: #2a303c;
+    border-radius: 5px;
+    padding: 50px;
+}
+.classes-container {
+    width: 100%;
+    overflow-x: hidden;
+}
+.add-classe {
+    background-color: blue;
+    height: 100%;
+    width: 70vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list-classe {
+    width: 80vw ;
+}
+
+.add-classe form input {
+    padding: 10px;
+    color: black;
+}
+
+.add-classe form label {
+    color: white;
+}
+
+.classes {
+    position: relative;
+    display: flex;
+    width: 150vw;
+    height: 100%;
+}
+
+.classes.add {
+    transform: translateX(-20%);
+} */

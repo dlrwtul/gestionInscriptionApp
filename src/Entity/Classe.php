@@ -15,7 +15,7 @@ class Classe
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 25, nullable: false, unique:false)]
+    #[ORM\Column(type: 'string', length: 25, nullable: false, unique:true)]
     private $libelle;
 
     #[ORM\Column(type: 'string', length: 25, nullable: false, unique: false)]
@@ -132,6 +132,16 @@ class Classe
         }
 
         return $this;
+    }
+
+    public static function getNiveaux():array 
+    {
+        return array("L1" => "L1","L2" => "L2","L3" => "L3","M1" => "M1","M2" => "M2","D1" => "D1","D2" => "D2","D3" => "D3");
+    }
+    
+    public static function getFilieres():array 
+    {
+        return array("Dev Web/Mobile" => "Dev Web/Mobile","Dev Data" => "Dev Data","Ref Dig" => "Ref Dig");
     }
 
 }

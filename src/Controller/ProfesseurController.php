@@ -15,12 +15,7 @@ class ProfesseurController extends AbstractController
     #[Route('/professeur', name: 'app_professeur')]
     public function index(ProfesseurRepository $repo,PaginatorInterface $paginator,Request $request): Response
     {
-        $professeurs = $repo->findAll();
-        $pagination = $paginator->paginate(
-            $professeurs, /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            10 /*limit per page*/
-        );
+        $pagination = $this->findForPaginate($repo,$request,$paginator,10);
         return $this->render('professeur/index.html.twig', [
             'controller_name' => 'ProfesseurController',
             "professeurs" => $pagination

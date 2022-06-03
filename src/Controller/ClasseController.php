@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Classe;
+use App\Form\ClasseType;
 use App\Repository\ClasseRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,20 +11,60 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/classe')]
 class ClasseController extends AbstractController
 {
-    #[Route('/classe', name: 'app_classe')]
+    #[Route('/', name: 'app_classe_index')]
     public function index(ClasseRepository $repo,PaginatorInterface $paginator,Request $request): Response
     {
-        $classes = $repo->findAll();
-        $pagination = $paginator->paginate(
-            $classes, /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            10 /*limit per page*/
-        );
+        $pagination = $this->findForPaginate($repo,$request,$paginator,10);
+        $this->addFlash('success', 'listed!');
         return $this->render('classe/index.html.twig', [
-            'controller_name' => 'ClasseController',
             'classes' => $pagination
         ]);
     }
+
+    #[Route('/new', name: 'app_classe_new')]
+    public function new(Request $request,ClasseRepository $repo): Response
+    {
+        $classe = new Classe();
+        $form = $this->createForm(ClasseType::class, $classe);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repo->add($classe, true);
+            $this->addFlash('success', 'Classe crée!');
+            return $this->redirectToRoute('app_classe_index',[], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('classe/new.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_classe_edit')]
+    public function edit(Request $request,Classe $classe ,ClasseRepository $repo)
+    {
+        $form = $this->createForm(ClasseType::class, $classe);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repo->add($classe, true);
+            $this->addFlash('success', 'Classe modifiée!');
+            return $this->redirectToRoute('app_classe_index',[], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('classe/new.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/delete', name: 'app_classe_delete')]
+    public function delete(Request $request,Classe $classe ,ClasseRepository $repo)
+    {
+        $repo->remove($classe, true);
+        $this->addFlash('success', 'Classe supprimée!');
+        return $this->redirectToRoute('app_classe_index', [], Response::HTTP_SEE_OTHER);
+    }
+
 }
