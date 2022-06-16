@@ -66,13 +66,14 @@ class InscriptionRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-    public function InscriptionAnneeEnCours(): ?Inscription
+    public function InscriptionAnneeEnCours():array
     {
         return $this->createQueryBuilder('i')
-            ->innerJoin('AnneeScolaire::class','a','WITH','i.id = a.id')
-            ->andWhere('a.etat = :val')
-            ->setParameter('val', "en cours")
-            ->getQuery()
-            ->getResult();
+                    ->innerJoin('App\Entity\AnneeScolaire','a','WITH')
+                    ->andWhere('a.etat = :val')
+                    ->setParameter('val', "en cours")
+                    ->orderBy('i.id', 'DESC')
+                    ->getQuery()
+                    ->getResult();
     }
 }

@@ -64,9 +64,10 @@ class EtudiantRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-    public function studentBySex($value): array
+    public function studentBySex($value):array
     {
         return $this->createQueryBuilder('e')
+            ->select('COUNT(e.id) as count')
             ->andWhere('e.sexe = :val')
             ->setParameter('val', $value)
             ->getQuery()

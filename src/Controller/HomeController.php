@@ -14,9 +14,9 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(EtudiantRepository $etrepo,ChartBuilderInterface $chartBuilder): Response
     {
-        $total = count($etrepo->findAll());
-        $totalF = count($etrepo->studentBySex("F"));
-        $totalM = count($etrepo->studentBySex("M"));
+        $totalF = $etrepo->studentBySex("F")[0]['count'];
+        $totalM = $etrepo->studentBySex("M")[0]['count'];
+        $total = $totalF + $totalM;
         $mpourc = (($totalM/$total)*100)."%";
         $fpourc = (($totalF/$total)*100)."%";
 
