@@ -11,7 +11,7 @@ class RP extends User
     
     public function __construct()
     {
-        $this->roles[] = "ROLE_RP";
+        $this->setRoles(array("ROLE_RP"));
     }
 
 }

@@ -40,6 +40,7 @@ class ModuleController extends AbstractController
                 $module = new Module();
                 $module->setLibelle($result[0]);
                 $moduleRepository->add($module,true);
+                $this->addFlash('succes', 'Module ajouté');
             } else {
                 $this->addFlash('error', 'Module deja existant');
             }
@@ -49,15 +50,15 @@ class ModuleController extends AbstractController
         
     }
 
-    #[Route('/{id}', name: 'app_module_show', methods: ['GET'])]
+    #[Route('/show/{id}', name: 'app_module_show', methods: ['GET'])]
     public function show(Module $module): Response
     {
-        return $this->render('module/show.html.twig', [
+        return $this->render('module/details.html.twig', [
             'module' => $module,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_module_edit', methods: ['GET', 'POST'])]
+   /*  #[Route('/{id}/edit', name: 'app_module_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Module $module, ModuleRepository $moduleRepository): Response
     {
         $form = $this->createForm(ModuleType::class, $module);
@@ -73,15 +74,15 @@ class ModuleController extends AbstractController
             'module' => $module,
             'form' => $form,
         ]);
-    }
+    } */
 
-    #[Route('/{id}', name: 'app_module_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'app_module_delete',methods: ['GET', 'POST'])]
     public function delete(Request $request, Module $module, ModuleRepository $moduleRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$module->getId(), $request->request->get('_token'))) {
+        //if ($this->isCsrfTokenValid('delete'.$module->getId(), $request->request->get('_token'))) {
             $moduleRepository->remove($module, true);
-        }
-
+        //}
+        $this->addFlash('success', 'Module supprimée!');
         return $this->redirectToRoute('app_module_index', [], Response::HTTP_SEE_OTHER);
     }
 }

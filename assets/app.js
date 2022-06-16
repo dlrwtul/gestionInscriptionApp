@@ -6,12 +6,18 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
+import './styles/msm.css';
 import './styles/app.css';
 import './styles/classe.css';
-
+import './styles/inscription.css';
+import './styles/login.css';
 // start the Stimulus application
 import './bootstrap';
 
-import './js/classe.js';
 import './js/alert.js';
+import './js/professeur.js';
+import './js/classe.js';
 import './js/module.js';
+import './js/inscription.js';
+
+

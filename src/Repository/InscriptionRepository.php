@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Inscription;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\AST\Join;
 
 /**
  * @extends ServiceEntityRepository<Inscription>
@@ -63,4 +65,14 @@ class InscriptionRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function InscriptionAnneeEnCours(): ?Inscription
+    {
+        return $this->createQueryBuilder('i')
+            ->innerJoin('AnneeScolaire::class','a','WITH','i.id = a.id')
+            ->andWhere('a.etat = :val')
+            ->setParameter('val', "en cours")
+            ->getQuery()
+            ->getResult();
+    }
 }

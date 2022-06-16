@@ -3,13 +3,13 @@
 {% block title %}Module index{% endblock %}
 
 {% block body %}
-    <button class="btn gap-2 m-2">
+<button class="btn gap-2 m-2">
   Total Modules
   <div class="badge"> {{ modules.getTotalItemCount }}</div>
 </button>
 
 <div class="container overflow-x-auto">
-  <table class="table w-max ">
+  <table class="table w-full ">
     <!-- head -->
     <thead>
         <tr>
@@ -30,7 +30,8 @@
                     <a href="{{ path('app_module_show',{'id': module.id,'module': module}) }}" class="btn btn-sm btn-details mr-4">Details</a>
                 </td>
                 <td>
-                    <a href="{{ path('app_module_edit',{'id': module.id,'module': module}) }}" class="btn btn-sm btn-warning mr-4">Modifier</a>
+{#                     <a href="{{ path('app_module_edit',{'id': module.id,'module': module}) }}" class="btn btn-sm btn-warning mr-4">Modifier</a>
+ #}                    
                     <a href="{{ path('app_module_delete',{'id': module.id,'module': module}) }}" class="btn btn-sm btn-error ml-4">Supprimer</a>
                 </td>
             </tr>
@@ -43,7 +44,7 @@
     </tbody>
   </table>
 </div>
-<div class="navigation w-full flex flex-row  m-4">
+<div class="navigation w-full flex flex-row justify-center m-4">
     {{ knp_pagination_render(modules) }}
 </div>
 {% endblock %}

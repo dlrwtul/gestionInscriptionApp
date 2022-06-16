@@ -15,10 +15,10 @@ class AnneeScolaire
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 10)]
+    #[ORM\Column(type: 'string', length: 10,unique: true,nullable:false)]
     private $libelle;
 
-    #[ORM\Column(type: 'string', length: 10)]
+    #[ORM\Column(type: 'string', length: 10,nullable:true)]
     private $etat;
 
     #[ORM\OneToMany(mappedBy: 'anneeScolaire', targetEntity: Inscription::class)]
@@ -86,5 +86,10 @@ class AnneeScolaire
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->libelle;
     }
 }

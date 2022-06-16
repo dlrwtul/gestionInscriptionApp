@@ -11,7 +11,7 @@
 <div class="my-9">
     <div class="badge badge-lg shadow-sm animate-bounce">Total {{ professeurs.getTotalItemCount }}</div>
 
-    <a href="" class="btn gap-2 m-2 absolute right-10 shadow-md">
+    <a href="{{ path('app_professeur_new') }}" class="btn gap-2 m-2 absolute right-10 shadow-md">
     Ajouter Professeur
     <div class="badge">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -37,10 +37,10 @@
             <tr>
                 <td scope="row">{{ professeur.nomComplet}}</td>
                 <td>{{ professeur.grade}}</td>
-                <td><button class="btn btn-sm btn-primary mr-4">Details</button></td>
+                <td><a href="{{ path('app_professeur_show',{'id': professeur.id,'classe': professeur}) }}" class="btn btn-sm btn-primary mr-4">details</a></td>
                 <td>
-                    <button class="btn btn-sm btn-warning mr-4">Modifier</button>
-                    <button class="btn btn-sm btn-error ml-4">Supprimer</button>
+                    <a href="{{ path('app_professeur_edit',{'id': professeur.id,'classe': professeur}) }}" class="btn btn-sm btn-warning mr-4">Modifier</a>
+                    <a href="{{ path('app_professeur_delete',{'id': professeur.id,'classe': professeur}) }}" class="btn btn-sm btn-error ml-4 del-classe">Supprimer</a>
                 </td>
             </tr>
         {% endfor %}

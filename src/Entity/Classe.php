@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ClasseRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Professeur;
+use App\Entity\Inscription;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\ClasseRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ClasseRepository::class)]
 class Classe
@@ -16,12 +19,16 @@ class Classe
     private $id;
 
     #[ORM\Column(type: 'string', length: 25, nullable: false, unique:true)]
+    #[Assert\NotBlank(message:"nom de classe obligatoire")]
+    #[Assert\Length(min:3,max:20)]
     private $libelle;
 
     #[ORM\Column(type: 'string', length: 25, nullable: false, unique: false)]
+    #[Assert\NotBlank(message:"filiere obligatoire")]
     private $filiere;
 
     #[ORM\Column(type: 'string', length: 25, nullable: false, unique: false)]
+    #[Assert\NotBlank(message:"niveau obligatoire")]
     private $niveau;
 
     #[ORM\OneToMany(mappedBy: 'classe', targetEntity: Inscription::class)]
@@ -136,12 +143,18 @@ class Classe
 
     public static function getNiveaux():array 
     {
-        return array("L1" => "L1","L2" => "L2","L3" => "L3","M1" => "M1","M2" => "M2","D1" => "D1","D2" => "D2","D3" => "D3");
+        return array("choisir niveau" => null,"L1" => "L1","L2" => "L2","L3" => "L3","M1" => "M1","M2" => "M2","D1" => "D1","D2" => "D2","D3" => "D3");
     }
     
     public static function getFilieres():array 
     {
-        return array("Dev Web/Mobile" => "Dev Web/Mobile","Dev Data" => "Dev Data","Ref Dig" => "Ref Dig");
+        return array("choisir filiere" => null,"Dev Web/Mobile" => "Dev Web/Mobile","Dev Data" => "Dev Data","Ref Dig" => "Ref Dig");
     }
+
+    public function __toString():string
+    {
+        return $this->getLibelle();
+    }
+
 
 }

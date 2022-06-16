@@ -1,0 +1,101 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Se connecter!{% endblock %}
+
+{% block body %}
+<form method="post">
+    <div class="absolute left-1/3 top-10 w-1/3 flex flex-row justify-center">
+           {% if error %}
+            <div class="alert alert-error mx-4 w-max flex flex-row justify-between">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-x-circle quit-alert relative bottom-1/3 left-2 cursor-pointer" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+            </div>
+            {% endif %}
+            {% if app.user %}
+            <div class="alert alert-warning mx-4 w-max flex flex-row justify-between">
+                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-x-circle quit-alert relative bottom-1/3 left-2 cursor-pointer" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+            </div>
+            {% endif %}
+    </div>
+
+    {# {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %} #}
+
+    {# {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %} #}
+
+    <div class="hero p-36 bg-base-200 rounded w-full">
+        <div class="hero-content flex-col lg:flex-row-reverse w-full">
+            <div class="text-center lg:text-left w-2/3">
+                <h1 class="text-5xl font-bold">Se Connecter!</h1>
+                <p class="py-6">Application de gestion d'inscription pour ecole </p>
+            </div>
+            <div class="card flex-shrink-0 w-1/3 max-w-sm shadow-2xl bg-base-100">
+                <div class="card-body">
+                    <div class="form-control">
+                        <label for="inputLogin" class="label">
+                            <span class="label-text">Email</span>
+                        </label>
+                        <input type="text" value="{{ last_username }}" name="login" id="inputLogin" placeholder="email" class="input input-bordered" autocomplete="current-password" required />
+                    </div>
+
+                    <div class="form-control">
+                        <label for="inputPassword" class="label">
+                            <span class="label-text">Mot de Passe</span>
+                        </label>
+                        <input type="password" name="password" id="inputPassword" placeholder="password" class="input input-bordered" autocomplete="current-password" required />
+                    </div>
+
+                    <input type="hidden" name="_csrf_token"
+                    value="{{ csrf_token('authenticate') }}"
+                    >
+
+                    <div class="form-control mt-6">
+                        <button type="submit" class="btn btn-success">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+    {# <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="inputLogin">Login</label>
+    <input type="text" value="{{ last_username }}" name="login" id="inputLogin" class="form-control" autocomplete="username" required autofocus>
+    
+    
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    > #}
+
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+    #}
+
+    {# <button class="btn btn-lg btn-primary" type="submit">
+        Sign in
+    </button> #}
+
+{% endblock %}

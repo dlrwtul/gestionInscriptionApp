@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use App\Repository\InscriptionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: InscriptionRepository::class)]
 class Inscription
 {
+   
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -16,20 +19,28 @@ class Inscription
     #[ORM\Column(type: 'datetime',nullable:false,unique:false)]
     private $date;
 
-    #[ORM\Column(type: 'string', length: 10,nullable:false,unique:true)]
+    #[ORM\Column(type: 'string', length: 10,nullable:false)]
     private $etat;
 
     #[ORM\ManyToOne(targetEntity: Classe::class, inversedBy: 'inscriptions')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message:"classe obligatoire")]
     private $classe;
 
     #[ORM\ManyToOne(targetEntity: AnneeScolaire::class, inversedBy: 'inscriptions')]
     #[ORM\JoinColumn(nullable: false)]
     private $anneeScolaire;
 
-    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'inscriptions')]
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'inscriptions', cascade:['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private $etudiant;
+
+    public function __construct()
+    {
+        $this->etat = "en cours";
+        $now = new \DateTime('now');
+        $this->date = $now;
+    }
 
     public function getId(): ?int
     {

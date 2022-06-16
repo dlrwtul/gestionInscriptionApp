@@ -1,5 +1,4 @@
 btnDelClasses = document.querySelectorAll(".del-classe");
-console.log(btnDelClasses);
 
 //===============
 

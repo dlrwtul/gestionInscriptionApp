@@ -39,6 +39,16 @@ class ClasseRepository extends ServiceEntityRepository
         }
     }
 
+    public function getClassesLibelle()
+    {
+        $classes = $this->findAll();
+        $libs = [];
+        foreach ($classes as $classe) {
+            $libs[$classe->getLibelle()] = $classe->getLibelle();
+        }
+        return $libs;
+    }
+
 //    /**
 //     * @return Classe[] Returns an array of Classe objects
 //     */

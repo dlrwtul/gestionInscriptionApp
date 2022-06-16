@@ -4,14 +4,20 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['login'], message: 'There is already an account with this login')]
+#[UniqueEntity(fields: ['login'], message: 'There is already an account with this login')]
 class User extends Personne implements UserInterface, PasswordAuthenticatedUserInterface
 {
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\NotBlank(message:"Veuillez saisir un email valide")]
     private $login;
 
     #[ORM\Column(type: 'json', nullable: false)]
@@ -49,7 +55,7 @@ class User extends Personne implements UserInterface, PasswordAuthenticatedUserI
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        //$roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
@@ -84,4 +90,6 @@ class User extends Personne implements UserInterface, PasswordAuthenticatedUserI
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+
 }

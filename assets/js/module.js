@@ -1,5 +1,3 @@
-const libModule = document.getElementsByName("libelle-module");
-
 const url = "http://127.0.0.1:8000/";
 
 
@@ -39,15 +37,13 @@ function get_data(route) {
         console.log(value);
     })
 }
-
-
-libModule[0].addEventListener("keyup", (e) =>{
-    if (e.keyCode == 13) {
-        send_data([libModule[0].value],"module/new");
-        libModule[0].value = ""
-        setTimeout(() => {
+const libModule = document.getElementsByName("libelle-module");
+if (!null == libModule) {
+    libModule[0].addEventListener("keyup", (e) =>{
+        if (e.keyCode == 13) {
+            send_data([libModule[0].value],"module/new");
+            libModule[0].value = ""
             window.location = url + "module";
-        }, 100);
-    }
-})
-
+        }
+    })
+}

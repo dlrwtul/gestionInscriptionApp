@@ -13,12 +13,18 @@ class ClasseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle')
+            ->add('libelle',null,[
+                'required' => false,
+            ])
             ->add('filiere',ChoiceType::class,[
                 'choices' => Classe::getFilieres()
+            ],[
+                'required' => false,
             ])
             ->add('niveau',ChoiceType::class,[
                 'choices' => Classe::getNiveaux()
+            ],[
+                'required' => false,
             ])
         ;
     }

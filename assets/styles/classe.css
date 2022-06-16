@@ -3,6 +3,7 @@
     background-color: #2a303c;
     border-radius: 5px;
     padding: 50px;
+    box-shadow: 2px 4px 23px -4px rgba(0,0,0,0.61);
 }
 
 .add-classe {
@@ -21,6 +22,10 @@
 
 .add-classe form label {
     color: white;
+}
+
+.ss-value {
+    background-color: #2a303c;
 }
 
 /* .add-classe form {

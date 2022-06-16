@@ -11,7 +11,7 @@ class AC extends User
     
     public function __construct()
     {
-        $this->roles[] = "ROLE_AC";
+        $this->setRoles(array("ROLE_AC"));
     }
 
 }

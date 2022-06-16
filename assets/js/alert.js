@@ -1,10 +1,15 @@
 const btnQuitAlerts = document.querySelectorAll(".quit-alert");
-
+let element = '';
 btnQuitAlerts.forEach(btnQuitAlert => {
     btnQuitAlert.parentElement.classList.add("animate-bounce");
     btnQuitAlert.addEventListener('click', (e) =>{
-        const div = e.target.parentElement;
-        div.classList.add("hidden");
+        if (e.target.parentElement.nodeName == 'DIV') {
+            element = e.target.parentElement;
+        }else {
+            element = e.target.parentElement.parentElement;
+        }
+        element.classList.add("hidden");
+        e.stopPropagation();
     })
     
 });
@@ -12,5 +17,5 @@ btnQuitAlerts.forEach(btnQuitAlert => {
 btnQuitAlerts.forEach(btnQuitAlert => {
     setTimeout(() => {
         btnQuitAlert.parentElement.classList.remove("animate-bounce");
-    }, 3000);
+    }, 1000);
 });

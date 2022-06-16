@@ -63,4 +63,14 @@ class EtudiantRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function studentBySex($value): array
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.sexe = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

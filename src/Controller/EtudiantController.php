@@ -3,22 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\Etudiant;
+use App\Repository\EtudiantRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/etudiant')]
 class EtudiantController extends AbstractController
 {
-    #[Route('/etudiant', name: 'app_etudiant')]
-    public function index(): Response
+    #[Route('/', name: 'app_etudiant_index')]
+    public function index(EtudiantRepository $repo,PaginatorInterface $paginator,Request $request): Response
     {
-        $etudiant = new Etudiant;
-        $etudiant->setNomComplet("lutwrld");
-        $etudiant->setAdresse("KM");
-        $etudiant->setSexe("M");
-        dd($etudiant);
+        $pagination = $this->findForPaginate($repo,$request,$paginator,10);
         return $this->render('etudiant/index.html.twig', [
-            'controller_name' => 'EtudiantController',
+            'etudiants' => $pagination,
         ]);
     }
 }

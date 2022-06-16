@@ -1,0 +1,34 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Hello LoginController!{% endblock %}
+
+{% block body %}
+
+{% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+{% endfor %}
+
+<div class="hero p-36 bg-base-200 rounded w-full">
+  <div class="hero-content flex-col lg:flex-row-reverse w-full">
+    <div class="text-center lg:text-left w-2/3">
+      <h1 class="text-5xl font-bold">Se Connecter!</h1>
+      <p class="py-6">Application de gestion d'inscription pour ecole </p>
+    </div>
+    <div class="card flex-shrink-0 w-1/3 max-w-sm shadow-2xl bg-base-100">
+      <div class="card-body">
+        {{ form_start(registrationForm) }}
+        <div class="login form-control">
+          {{ form_row(registrationForm.login,{attr: {class: 'input input-bordered w-full'},label_attr: {class: 'label'} }) }}
+        </div>
+        <div class="login form-control">
+          {{ form_row(registrationForm.plainPassword,{attr: {class: 'input input-bordered w-full'},label: 'Password',label_attr: {class: 'label'} } ) }} 
+        </div>
+        <div class="form-control mt-6">
+          <button type="submit" class="btn btn-success">Connexion</button>
+        </div>
+        {{ form_end(registrationForm) }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

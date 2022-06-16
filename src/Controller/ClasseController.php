@@ -18,7 +18,6 @@ class ClasseController extends AbstractController
     public function index(ClasseRepository $repo,PaginatorInterface $paginator,Request $request): Response
     {
         $pagination = $this->findForPaginate($repo,$request,$paginator,10);
-        $this->addFlash('success', 'listed!');
         return $this->render('classe/index.html.twig', [
             'classes' => $pagination
         ]);
@@ -32,9 +31,17 @@ class ClasseController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $repo->add($classe, true);
-            $this->addFlash('success', 'Classe crée!');
-            return $this->redirectToRoute('app_classe_index',[], Response::HTTP_SEE_OTHER);
+            $findClasse = $repo->findBy(["libelle" => $classe->getLibelle()]);
+            if ($findClasse == []) {
+                $repo->add($classe, true);
+                $this->addFlash('success', 'Classe crée!');
+                return $this->redirectToRoute('app_classe_index',[], Response::HTTP_SEE_OTHER);
+            } else {
+                $form = $this->createForm(ClasseType::class, $classe);
+                $this->addFlash('error', 'Classe deja existante!');
+            }
+            
+            
         }
 
         return $this->renderForm('classe/new.html.twig', [
@@ -49,9 +56,14 @@ class ClasseController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $repo->add($classe, true);
-            $this->addFlash('success', 'Classe modifiée!');
-            return $this->redirectToRoute('app_classe_index',[], Response::HTTP_SEE_OTHER);
+            $findClasse = $repo->findBy(["libelle" => $classe->getLibelle()]);
+            if ($findClasse == []) {
+                $repo->add($classe, true);
+                $this->addFlash('success', 'Classe modifiée!');
+                return $this->redirectToRoute('app_classe_index',[], Response::HTTP_SEE_OTHER);
+            } else {
+                $this->addFlash('error', 'Classe deja existante!');
+            }
         }
 
         return $this->renderForm('classe/new.html.twig', [

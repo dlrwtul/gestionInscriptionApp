@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220531183334 extends AbstractMigration
+final class Version20220614200416 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,14 +20,13 @@ final class Version20220531183334 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX UNIQ_8F87BF96A4D60759 ON classe');
-        $this->addSql('DROP INDEX UNIQ_C242628A4D60759 ON module');
+        $this->addSql('CREATE TABLE demande (id INT AUTO_INCREMENT NOT NULL, etudiant_id INT DEFAULT NULL, motif LONGTEXT NOT NULL, etat VARCHAR(255) NOT NULL, date DATE NOT NULL, INDEX IDX_2694D7A5DDEAB1A3 (etudiant_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE demande ADD CONSTRAINT FK_2694D7A5DDEAB1A3 FOREIGN KEY (etudiant_id) REFERENCES etudiant (id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_8F87BF96A4D60759 ON classe (libelle)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_C242628A4D60759 ON module (libelle)');
+        $this->addSql('DROP TABLE demande');
     }
 }

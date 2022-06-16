@@ -6,6 +6,7 @@ use App\Repository\ModuleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ModuleRepository::class)]
 class Module
@@ -16,6 +17,8 @@ class Module
     private $id;
 
     #[ORM\Column(type: 'string', length: 25, nullable: false, unique: false)]
+    #[Assert\NotBlank(message:"nom de module obligatoire")]
+    #[Assert\Length(min:3,max:10,message: "saisir au min 3 caractères et au max 10")]
     private $libelle;
 
     #[ORM\ManyToMany(targetEntity: Professeur::class, mappedBy: 'modules')]
